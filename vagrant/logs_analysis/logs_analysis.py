@@ -40,29 +40,26 @@ queries = {
 
 
 
-def connect():
-    """Connects do Database"""
+def get_query_results(query):
+    """Connects do Database, makes query and return results"""
     try:
         db = psycopg2.connect(database=DBNAME)
         c = db.cursor()
-        return db,c
-    except:
-       "Unable to connect to database"
-
-def make_query(query):
-    """Makes query and return results"""
-    db,c = connect()
-    c.execute(query)
-    return c.fetchall()
-    db.close()
+        c.execute(query)
+        result = c.fetchall()
+        db.close()
+        return result
+    except Exception as e:
+        print(e)
+        exit(1)
 
 
 if __name__ == "__main__":
-    for k,v in queries.items():
-        print k
-        res = make_query(v)
+    for k, v in queries.items():
+        print(k)
+        res = get_query_results(v)
         if not res:
             print 'No results'
         else:
-            for i,j in make_query(v):
-                print i + ' - ' + str(j)
+            for i, j in get_query_results(v):
+                print(i + ' - ' + str(j))
