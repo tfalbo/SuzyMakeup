@@ -19,6 +19,32 @@ most_popular_authors = """select authors.name, count(*) as num
     and articles.author = authors.id
     group by authors.name order by  num desc;"""
 
+# When is the percentage of error is greater or equal to 1%?
+percentage_of_errors = """
+    select * from
+      (select date, round(error_views * 100.0 / total_views, 1) as percent
+      from
+        (select t1.date, t1.total_views, t2.error_views
+        from
+            (select log.time::date as date, count(*) as total_views
+                from log
+                  group by log.time::date
+                  order by log.time::date
+            ) t1
+        join
+            (
+            select log.time::date as date, count(*) as error_views
+              from log
+                where log.status != '200 OK'
+                group by log.time::date
+                order by log.time::date
+            ) t2
+        on
+            t1.date = t2.date
+        ) t3
+      ) t4
+    where percent>=1.0;
+    """
 
 # Are there any errors when the correct slug is requested?
 errors_with_correct_slug = """
@@ -62,4 +88,4 @@ if __name__ == "__main__":
             print 'No results'
         else:
             for i, j in get_query_results(v):
-                print(i + ' - ' + str(j))
+                print(str(i) + ' - ' + str(j))
