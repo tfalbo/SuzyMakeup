@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 
 ## Routes for Categories
-
+@app.route('/')
 @app.route('/categories')
 def showCategories():
     return "This page will show all categories"
@@ -22,6 +22,7 @@ def deleteCategory(category_id):
 
 ## Routes for Items
 
+@app.route('/categories/<int:category_id>')
 @app.route('/categories/<int:category_id>/items')
 def showItems(category_id):
     return "This page will show all items of category {}".format(category_id)
