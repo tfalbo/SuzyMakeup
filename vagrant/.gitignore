@@ -1,4 +1,5 @@
 __pycache__
 *.pyc
+*.db
 .vagrant
-logs_analysis/newsdata.sql
+.DS_Store
