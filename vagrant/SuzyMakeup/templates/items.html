@@ -1,24 +1,66 @@
 <html>
 
 <body>
+  <div class = 'pane'>
+		<div class = 'header'>
+		<h1>{{ category.name }}</h1>
+	</div>
 
-<h1>{{category.name}}</h1>
+	<a href = '{{url_for('newItem', category_id = category.id) }}'>Create New Item</a>
 
 
-{% for i in items %}
+<!-- <div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
 
-<div>
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
 
-<p>{{i.name}}</p>
+</div> -->
 
-<p>{{i.description}}</p>
 
-<p> {{i.price}} </p>
+		{% for i in items %}
+    <div class = 'nameAndPrice'>
+		<span class = 'name'><p>{{i.name}}</p></span>
+
+		<span class = 'price'>
+
+
+		<p>{{i.price}} </p>
+	</span>
+	</div>
+
+
+
+	<div class = 'description'>
+		<p>{{i.description}}</p>
+	</div>
+
+
+
+	<div class = "editdeletepane">
+
+	<a href='{{url_for('editItem',category_id = category.id, item_id=i.id)}}' >Edit</a>
+	<a href='{{url_for('deleteItem', category_id = category.id, item_id=i.id)}}' >
+	Delete</a>
+	</div>
+
+
+
+
+		{% endfor %}
+
+
+
+
 
 </div>
-
-
-{% endfor %}
+</div>
 </body>
 
 </html>
