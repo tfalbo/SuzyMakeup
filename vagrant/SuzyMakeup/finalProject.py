@@ -1,33 +1,31 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import Base, Category, Item
+
 app = Flask(__name__)
 
+engine = create_engine('sqlite:///suzymakeup.db')
+Base.metadata.bind = engine
 
-#Fake Categories
-category = {'name': 'Face', 'id': '1'}
-
-categories = [{'name': 'Face', 'id': '1'}, {'name':'Eyes', 'id':'2'},{'name':'Lips', 'id':'3'}]
-
-
-#Fake Category Items
-items = [ {'name':'Foundation', 'description':'made with fresh cheese', 'price':'$5.99', 'id':'1'},
-        {'name':'Blush','description':'made with Dutch Chocolate', 'price':'$3.99', 'id':'2'},
-        {'name':'Powder', 'description':'with fresh organic vegetables','price':'$5.99', 'id':'3'},
-        {'name':'Primer', 'description':'with lemon','price':'$.99', 'id':'4'},
-        {'name':'Bronzer', 'description':'creamy dip with fresh spinach','price':'$1.99','id':'5'} ]
-
-item =  {'name':'Foundation','description':'made with fresh cheese','price':'$5.99'}
-
-## Routes for Categories
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 @app.route('/')
 @app.route('/categories')
 def showCategories():
+    categories = session.query(Category)
     return render_template('categories.html', categories = categories)
 
-@app.route('/categories/new')
+@app.route('/categories/new', methods=['GET', 'POST'])
 def newCategory():
-    return render_template('newCategory.html')
+    if request == 'POST':
+        newCategory = Category(name=request.form['name'])
+        session.add(newCategory)
+        session.commit()
+        return redirect(url_for('/'))
+    else:
+        return render_template('newCategory.html')
 
 @app.route('/categories/<int:category_id>/edit')
 def editCategory(category_id):

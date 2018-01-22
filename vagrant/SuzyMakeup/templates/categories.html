@@ -1,0 +1,27 @@
+<html>
+
+<body>
+
+<h1>Suzy Makeup</h1>
+
+<a href = "{{url_for('newCategory')}}"> <h3>Create Category</h3></a>
+<div class = 'pane'>
+{% for category in categories %}
+
+<div>
+
+<a href = "{{url_for('showItems', category_id = category.id)}}"> <h3>{{category.name}}</h3></a>
+
+<p><a href = "{{url_for('editCategory', category_id = category.id)}}">Edit Category</a></p>
+
+<p> <a href = "{{url_for('deleteCategory', category_id = category.id)}}">Delete Category</a> </p>
+
+</div>
+
+
+{% endfor %}
+</div>
+
+</body>
+
+</html>
