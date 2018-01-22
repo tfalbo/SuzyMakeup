@@ -19,11 +19,11 @@ def showCategories():
 
 @app.route('/categories/new', methods=['GET', 'POST'])
 def newCategory():
-    if request == 'POST':
+    if request.method == 'POST':
         newCategory = Category(name=request.form['name'])
         session.add(newCategory)
         session.commit()
-        return redirect(url_for('/'))
+        return redirect(url_for('/categories'))
     else:
         return render_template('newCategory.html')
 
