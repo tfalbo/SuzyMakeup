@@ -11,6 +11,24 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+## Routes
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/category/')
+def indexCategory():
+    return render_template('category.html')
+
+@app.route('/category/item/')
+def indexItem():
+    return render_template('item.html')
+
+
+## Admin route
 
 @app.route('/admin/')
 @app.route('/admin/categories/')
