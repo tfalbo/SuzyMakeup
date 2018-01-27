@@ -11,6 +11,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
 @app.route('/categories/')
 def showCategories():
@@ -99,6 +100,21 @@ def deleteItem(category_id, item_id):
     else:
         return render_template('deleteItem.html', item = itemToDelete)
 
+
+## API Endpoints
+
+@app.route('/api/')
+@app.route('/api/categories/')
+def apiShowCategories():
+    categories = session.query(Category)
+    return jsonify(categories=[c.serialize for c in categories])
+
+@app.route('/api/categories/<int:category_id>/')
+@app.route('/api/categories/<int:category_id>/items/', methods = ['GET'])
+def apiShowItems(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id=category_id)
+    return jsonify(category=category.name,items=[i.serialize for i in items])
 
 
 if __name__ == '__main__':
