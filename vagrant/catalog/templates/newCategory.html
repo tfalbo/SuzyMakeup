@@ -1,15 +1,73 @@
+<!doctype html>
 <html>
-<body>
-
-<h1> New Category </h1>
-
-<form action="{{ url_for('newCategory') }}" method = 'post'>
-<p>Name:</p>
-<input type = 'text' size='30' name = 'name'>
-
-<input type='submit' value='Create'>
-</form>
-
-<a href="#">Cancel</a>
-</body>
+  <head>
+    <title>Suzy Makeup</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
+  </head>
+  <style>
+    .title
+    {
+      color: var(--siimple-pink);
+    }
+    
+    .link{
+      text-decoration: none;
+      color: #57607c;
+    }
+    .button-link
+    {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+  </style>
+  <body>
+    <div class="siimple-grid">
+      <!-- Content -->
+      <div class="siimple-grid-row">
+        <!--Menu-->
+        <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white">
+          </div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white">
+            <div class="siimple-box-title title">Suzy Makeup</div>
+            <div class="siimple-box-subtitle">ADMIN</div>
+          </div>
+          <div class="siimple-menu">
+            <div class="siimple-menu-group">CATEGORIES</div>
+            {% for c in categories %}
+            <a class="siimple-menu-item" href="{{url_for('showItems', category_id = c.id)}}">{{ c.name }}</a>
+            {% endfor %}
+            <div class="siimple-menu-sub">
+              <div class="siimple-menu-item"><a class="link" href = "{{url_for('newCategory')}}">Add New Category</a></div>
+            </div>
+          </div>
+        </div>
+        <!-- Main Content -->
+        <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-content">
+            <div class="siimple-form">
+              <form id="myform" action="{{ url_for('newCategory') }}" method = 'post'>
+                <div class="siimple-form-title">Add New Category</div>
+                <div class="siimple-form-detail">Fill the form to add new category.</div>
+                <div class="siimple-box siimple-box--white"></div>
+                <label class="siimple-label">Category name: </label>
+                <input type="text" name="name" class="siimple-input">
+                <div class="siimple-box siimple-box--white"></div>
+                <div class="siimple-form-field">
+                  <div class="siimple-btn siimple-btn--pink"><a class="link" href="javascript:{}" onclick="document.getElementById('myform').submit(); return false;">Submit</a></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

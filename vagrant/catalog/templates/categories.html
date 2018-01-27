@@ -1,27 +1,63 @@
+<!doctype html>
 <html>
-
-<body>
-
-<h1>Suzy Makeup</h1>
-
-<a href = "{{url_for('newCategory')}}"> <h3>Create Category</h3></a>
-<div class = 'pane'>
-{% for category in categories %}
-
-<div>
-
-<a href = "{{url_for('showItems', category_id = category.id)}}"> <h3>{{category.name}}</h3></a>
-
-<p><a href = "{{url_for('editCategory', category_id = category.id)}}">Edit Category</a></p>
-
-<p> <a href = "{{url_for('deleteCategory', category_id = category.id)}}">Delete Category</a> </p>
-
-</div>
-
-
-{% endfor %}
-</div>
-
-</body>
-
+  <head>
+    <title>Suzy Makeup</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
+  </head>
+  <style>
+    .title
+    {
+      color: var(--siimple-pink);
+    }
+    
+    .link{
+      text-decoration: none;
+      color: #57607c;
+    }
+    .button-link
+    {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+  </style>
+  <body>
+    <div class="siimple-grid">
+      <!-- Content -->
+      <div class="siimple-grid-row">
+        <!--Menu-->
+        <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white">
+          </div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white">
+            <div class="siimple-box-title title">Suzy Makeup</div>
+            <div class="siimple-box-subtitle">ADMIN</div>
+          </div>
+          <div class="siimple-menu">
+            <div class="siimple-menu-group">CATEGORIES</div>
+            {% for c in categories %}
+            <a class="siimple-menu-item" href="{{url_for('showItems', category_id = c.id)}}">{{ c.name }}</a>
+            {% endfor %}
+            <div class="siimple-menu-sub">
+              <div class="siimple-menu-item"><a class="link" href = "{{url_for('newCategory')}}">Add New Category</a></div>
+            </div>
+          </div>
+        </div>
+        <!-- Main Content -->
+        <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-jumbotron siimple-jumbotron--pink siimple-jumbotron--fluid">
+            <div class="siimple-jumbotron-title">Hello, Jane!</div>
+            <div class="siimple-jumbotron-subtitle">Welcome to the admin</div>
+            <div class="siimple-jumbotron-detail">Please choose an option on the left</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

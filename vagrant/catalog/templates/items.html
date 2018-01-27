@@ -1,66 +1,113 @@
+<!doctype html>
 <html>
+  <head>
+    <title>Suzy Makeup</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
+  </head>
+  <style>
+    .title
+    {
+      color: var(--siimple-pink);
+    }
+    
+    .link{
+      text-decoration: none;
+      color: #57607c;
+    }
+    .button-link
+    {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+  </style>
+  <body>
+    <!-- <div class = 'flash'>
+  		      {% with messages = get_flashed_messages() %}
+        {% if messages %}
 
-<body>
-  <div class = 'pane'>
-		<div class = 'header'>
-		<h1>{{ category.name }}</h1>
-	</div>
+          <ul>
+          {% for message in messages %}
+              <li> <strong> {{ message }} </strong> </li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+      {% endwith %}
 
-	<a href = '{{url_for('newItem', category_id = category.id) }}'>Create New Item</a>
-
-
-<!-- <div class = 'flash'>
-		      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-
-        <ul>
-        {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
-
-</div> -->
-
-
-		{% for i in items %}
-    <div class = 'nameAndPrice'>
-		<span class = 'name'><p>{{i.name}}</p></span>
-
-		<span class = 'price'>
-
-
-		<p>{{i.price}} </p>
-	</span>
-	</div>
-
-
-
-	<div class = 'description'>
-		<p>{{i.description}}</p>
-	</div>
-
-
-
-	<div class = "editdeletepane">
-
-	<a href='{{url_for('editItem',category_id = category.id, item_id=i.id)}}' >Edit</a>
-	<a href='{{url_for('deleteItem', category_id = category.id, item_id=i.id)}}' >
-	Delete</a>
-	</div>
-
-
-
-
-		{% endfor %}
-
-
-
-
-
-</div>
-</div>
-</body>
-
+  </div> -->
+    <div class="siimple-grid">
+      <!-- Content -->
+      <div class="siimple-grid-row">
+        <!--Menu-->
+        <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white">
+          </div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white">
+            <div class="siimple-box-title title">Suzy Makeup</div>
+            <div class="siimple-box-subtitle">Admin</div>
+          </div>
+          <div class="siimple-menu">
+            <div class="siimple-menu-group">CATEGORIES</div>
+            {% for c in categories %}
+            <a class="siimple-menu-item" href="{{url_for('showItems', category_id = c.id)}}">{{ c.name }}</a>
+            {% endfor %}
+            <div class="siimple-menu-sub">
+              <div class="siimple-menu-item"><a class="link" href = "{{url_for('newCategory')}}">Add New Category</a></div>
+            </div>
+          </div>
+        </div>
+        <!-- Main Content -->
+        <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-grid">
+            <div class="siimple-grid-row">
+              <div class="siimple-grid-col siimple-grid-col--6">
+                <div class="siimple-h3">{{ category.name }}</div>
+              </div>
+              <div class="siimple-grid-col siimple-grid-col--6">
+                <div class="siimple-btn siimple-btn--pink" style="float:right;"><a class="button-link" href = "{{url_for('newItem', category_id = category.id) }}">Add New Item</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="siimple-table siimple-table--border siimple-table--hover">
+            <div class="siimple-table-header">
+              <div class="siimple-table-row">
+                <div class="siimple-table-cell">ID</div>
+                <div class="siimple-table-cell">Name</div>
+                <div class="siimple-table-cell">Actions</div>
+              </div>
+            </div>
+            <div class="siimple-table-body">
+              {% for item in items %}
+              <div class="siimple-table-row">
+                <div class="siimple-table-cell">{{item.id}}</div>
+                <div class="siimple-table-cell">{{item.name}}</div>
+                <div class="siimple-table-cell">
+                  <div class="siimple-btn siimple-btn--navy"><a class="button-link" href = "{{url_for('editItem',category_id = category.id, item_id=item.id)}}">Edit</a></div>
+                  <div class="siimple-btn siimple-btn--red"><a class="button-link" href = "{{url_for('deleteItem',category_id = category.id, item_id=item.id)}}">Delete</a></div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--white"></div>
+          <div class="siimple-box siimple-box--red ">
+            <div class="siimple-box-title">Danger Zone!</div>
+            <div class="siimple-content">
+              <div class="siimple-btn siimple-btn--navy"><a class="button-link" href = "{{url_for('editCategory', category_id = category.id) }}">Edit Category</a></div>
+              <div class="siimple-btn siimple-btn--navy"><a class="button-link" href = "{{url_for('deleteCategory',  category_id = category.id)}}">Delete Category</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
