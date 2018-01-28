@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Category, Item
+from models import Base, Category, Item, Photo
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 app = Flask(__name__)
 
@@ -11,8 +12,34 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-## Routes
+## Photo Setup
 
+app.config['UPLOADS_DEFAULT_DEST'] = "catalog/static/img"
+app.config['UPLOADS_DEFAULT_URL'] = "http://0.0.0.0:5000/static/img/"
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
+
+## Photo Routes
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST' and 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        newPhoto = Photo(filename=filename)
+        session.add(newPhoto)
+        session.commit()
+        return filename
+    return render_template('upload.html')
+
+@app.route('/photo/<int:photo_id>/', methods=['GET'])
+def show(photo_id):
+    photo = session.query(Photo).filter_by(id=photo_id).one()
+    if photo is None:
+        abort(404)
+    url = photos.url(photo.filename)
+    return render_template('show.html', url=url, photo=photo)
+
+## Routes
 
 @app.route('/')
 def index():
