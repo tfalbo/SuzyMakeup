@@ -12,6 +12,11 @@
   color: var(--siimple-pink);
 }
 
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 </style>
 <body>
 
@@ -52,7 +57,7 @@
     <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
       <div class="siimple-box siimple-box--white"></div>
       <div class="siimple-box siimple-box--white"></div>
-      <img src="{{ url_for('static', filename='img/bigpic.jpg') }}" />
+      <div class="content"><img src="{{ url_for('static', filename='img/bigpic.jpg') }}" /></div>
       <div class="siimple-h3">Latest Items</div>
 
       <div class="siimple-grid">
