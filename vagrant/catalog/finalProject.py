@@ -52,11 +52,15 @@ def index():
 @app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/items')
 def indexCategory(category_id):
-    return render_template('category.html')
+    categories = session.query(Category)
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id = category_id)
+    return render_template('category.html', categories = categories, category = category, items = items)
 
 @app.route('/category/item/')
 def indexItem():
     return render_template('item.html')
+
 
 
 ## Admin route

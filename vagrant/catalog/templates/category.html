@@ -40,11 +40,9 @@
         <div class="siimple-box-title title">Suzy Makeup</div>
       </div>
       <div class="siimple-menu">
-          <a class="siimple-menu-item">Face</a>
-          <a class="siimple-menu-item">Eyes</a>
-          <a class="siimple-menu-item">Lips</a>
-          <a class="siimple-menu-item">Tools and Brushes</a>
-          <a class="siimple-menu-item">Accessories</a>
+        {% for c in categories %}
+        <a class="siimple-menu-item" href="{{url_for('indexCategory', category_id = c.id)}}">{{ c.name }}</a>
+        {% endfor %}
       </div>
 
     </div>
@@ -52,79 +50,20 @@
     <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
       <div class="siimple-box siimple-box--white"></div>
       <div class="siimple-box siimple-box--white"></div>
-      <div class="siimple-h3">Category Name</div>
+      <div class="siimple-h3">{{ category.name }}</div>
 
       <div class="siimple-grid">
-        <div class="siimple-grid-row">
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/lips1.jpg" />
-              <div class="siimple-box-subtitle title">Cat Lipstick</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/eyes1.jpg" />
-              <div class="siimple-box-subtitle title">Cat Eyeshadow</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/eyes2.jpg" />
-              <div class="siimple-box-subtitle title">Cat Eyeshadow</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-        </div>
-        <div class="siimple-grid-row">
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/eyes3.jpg" />
-              <div class="siimple-box-subtitle title">Cat Eyeshadow</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/eyes4.jpg" />
-              <div class="siimple-box-subtitle title">Cat Eyeshadow</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-              <div class="siimple-box siimple-box--white">
-                <img src="img/brush1.jpg" />
-                <div class="siimple-box-subtitle title">Cat Paw Brush</div>
-                <div class="siimple-box-detail">$22.99</div>
-              </div>
-          </div>
-        </div>
-        <div class="siimple-grid-row">
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/access1.png" />
-              <div class="siimple-box-subtitle title">Cat Band</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/access3.png" />
-              <div class="siimple-box-subtitle title">Cat Pouch</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
-          </div>
-          <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
-            <div class="siimple-box siimple-box--white">
-              <img src="img/access4.png" />
-              <div class="siimple-box-subtitle title">Cat Pouch</div>
-              <div class="siimple-box-detail">$22.99</div>
-            </div>
 
+        {% for i in items %}
+        <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
+          <div class="siimple-box siimple-box--white">
+            <!-- <img src="img/lips1.jpg" /> -->
+            <div class="siimple-box-subtitle title">{{ i.name }}</div>
+            <div class="siimple-box-detail">{{ i.price }}</div>
           </div>
         </div>
+        {% endfor %}
+
       </div>
 
 

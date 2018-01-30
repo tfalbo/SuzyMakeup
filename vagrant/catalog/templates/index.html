@@ -46,7 +46,7 @@ img {
       </div>
       <div class="siimple-menu">
         {% for c in categories %}
-        <a class="siimple-menu-item" href="{{url_for('showItems', category_id = c.id)}}">{{ c.name }}</a>
+        <a class="siimple-menu-item" href="{{url_for('indexCategory', category_id = c.id)}}">{{ c.name }}</a>
         {% endfor %}
       </div>
 
