@@ -14,7 +14,7 @@ session = DBSession()
 
 ## Photo Setup
 
-app.config['UPLOADS_DEFAULT_DEST'] = "catalog/static/img"
+app.config['UPLOADS_DEFAULT_DEST'] = "static/img"
 app.config['UPLOADS_DEFAULT_URL'] = "http://0.0.0.0:5000/static/img/"
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
