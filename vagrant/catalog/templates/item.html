@@ -11,6 +11,15 @@
 {
   color: var(--siimple-pink);
 }
+.link{
+  text-decoration: none;
+  color: var(--siimple-pink);
+}
+.button-link
+{
+    text-decoration: none;
+    color: #FFFFFF;
+}
 
 </style>
 <body>
@@ -37,14 +46,12 @@
 
       </div>
       <div class="siimple-box siimple-box--white">
-        <div class="siimple-box-title title">Suzy Makeup</div>
+        <div class="siimple-box-title title"><a class="link" href="{{ url_for('index') }}">Suzy Makeup</a></div>
       </div>
       <div class="siimple-menu">
-          <a class="siimple-menu-item">Face</a>
-          <a class="siimple-menu-item">Eyes</a>
-          <a class="siimple-menu-item">Lips</a>
-          <a class="siimple-menu-item">Tools and Brushes</a>
-          <a class="siimple-menu-item">Accessories</a>
+        {% for c in categories %}
+        <a class="siimple-menu-item" href="{{url_for('indexCategory', category_id = c.id)}}">{{ c.name }}</a>
+        {% endfor %}
       </div>
 
     </div>
@@ -68,9 +75,9 @@
           </div>
           <div class="siimple-grid-col siimple-grid-col--6 siimple-grid-col-md--12">
             <div class="siimple-box siimple-box--white">
-              <div class="siimple-box-subtitle title">Cat Lipstick</div>
-              <div class="siimple-box-detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-              <div class="siimple-box-subtitle">$22.99</div>
+              <div class="siimple-box-subtitle title">{{ item.name }}</div>
+              <div class="siimple-box-detail">{{ item.description }}</div>
+              <div class="siimple-box-subtitle">{{ item.price }}</div>
               <div class="siimple-btn siimple-btn--navy">Buy</div>
             </div>
           </div>

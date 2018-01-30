@@ -57,9 +57,11 @@ def indexCategory(category_id):
     items = session.query(Item).filter_by(category_id = category_id)
     return render_template('category.html', categories = categories, category = category, items = items)
 
-@app.route('/category/item/')
-def indexItem():
-    return render_template('item.html')
+@app.route('/categories/<int:category_id>/items/<int:item_id>/')
+def indexItem(category_id, item_id):
+    categories = session.query(Category)
+    item = session.query(Item).filter_by(id = item_id).one()
+    return render_template('item.html', categories = categories, item = item)
 
 
 
