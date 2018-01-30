@@ -42,12 +42,16 @@ def show(photo_id):
 ## Routes
 
 @app.route('/')
+@app.route('/categories/')
 def index():
-    return render_template('index.html')
+    categories = session.query(Category)
+    items = session.query(Item)
+    return render_template('index.html', categories = categories, items = items)
 
 
-@app.route('/category/')
-def indexCategory():
+@app.route('/categories/<int:category_id>/')
+@app.route('/categories/<int:category_id>/items')
+def indexCategory(category_id):
     return render_template('category.html')
 
 @app.route('/category/item/')
