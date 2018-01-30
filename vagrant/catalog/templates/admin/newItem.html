@@ -10,7 +10,7 @@
     {
       color: var(--siimple-pink);
     }
-    
+
     .link{
       text-decoration: none;
       color: #57607c;
@@ -53,7 +53,7 @@
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-content">
             <div class="siimple-form">
-              <form id="myform" action="{{ url_for('newItem', category_id=category_id )}}" method = 'post'>
+              <form id="myform" enctype="multipart/form-data" action="{{ url_for('newItem', category_id=category_id )}}" method = 'post'>
                 <div class="siimple-form-title">Add New Item</div>
                 <div class="siimple-form-detail">Fill the form to add new item.</div>
                 <div class="siimple-box siimple-box--white"></div>
@@ -64,9 +64,15 @@
                 <input type="text" name="price" class="siimple-input">
                 <div class="siimple-box siimple-box--white"></div>
                 <label class="siimple-label">Description: </label><br>
-                <textarea class="siimple-textarea" name="description" rows="5">
-  Type here your message
-</textarea>
+                <textarea class="siimple-textarea" name="description" columns="20">
+                    Type here your message
+                </textarea>
+                <div class="siimple-box siimple-box--white"></div>
+                <div class="siimple-form-field">
+                  <div class="siimple-form-field-label">Photo</div>
+                  <input type=file name="photo">
+                  <div class="siimple-form-field-helper">This field can't be empty</div>
+                </div>
                 <div class="siimple-box siimple-box--white"></div>
                 <div class="siimple-form-field">
                   <div class="siimple-btn siimple-btn--pink"><a class="link" href="javascript:{}" onclick="document.getElementById('myform').submit(); return false;">Submit</a></div>

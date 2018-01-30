@@ -36,6 +36,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
     price = Column(String(8))
+    photo_filename = Column(String(250), nullable=True)
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
 

@@ -125,6 +125,7 @@ def newItem(category_id):
         newItem = Item(name=request.form['name'],
                         description=request.form['description'],
                         price=request.form['price'],
+                        photo_filename = photos.save(request.files['photo']),
                         category_id=category_id)
         session.add(newItem)
         session.commit()
@@ -143,6 +144,8 @@ def editItem(category_id, item_id):
             editedItem.description = request.form['name']
         if request.form['price']:
             editedItem.price = request.form['price']
+        if request.form['photo']:
+            editedItem.photo_filename = photos.save(request.files['photo'])
         session.add(editedItem)
         session.commit()
         return redirect(url_for('showItems',category_id = category_id))

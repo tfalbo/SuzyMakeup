@@ -10,7 +10,7 @@
     {
       color: var(--siimple-pink);
     }
-    
+
     .link{
       text-decoration: none;
       color: #57607c;
@@ -53,7 +53,7 @@
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-content">
             <div class="siimple-form">
-              <form id="myform" action="{{ url_for('editItem', category_id = category_id, item_id = item.id )}}" method = 'POST'>
+              <form id="myform" enctype="multipart/form-data" action="{{ url_for('editItem', category_id = category_id, item_id = item.id )}}" method = 'POST'>
                 <div class="siimple-form-title">Edit Item</div>
                 <div class="siimple-form-detail">Fill the form to edit item.</div>
                 <div class="siimple-box siimple-box--white"></div>
@@ -70,6 +70,11 @@
                 <div class="siimple-form-field">
                   <div class="siimple-form-field-label">Description</div>
                   <textarea class="siimple-textarea" name="description">{{ item.description }}</textarea>
+                  <div class="siimple-form-field-helper">This field can't be empty</div>
+                </div>
+                <div class="siimple-form-field">
+                  <div class="siimple-form-field-label">Photo</div>
+                  <input type=file name=photo>
                   <div class="siimple-form-field-helper">This field can't be empty</div>
                 </div>
                 <div class="siimple-form-field">
