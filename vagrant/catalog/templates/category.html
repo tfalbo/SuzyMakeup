@@ -48,7 +48,7 @@
 
       </div>
       <div class="siimple-box siimple-box--white">
-        <div class="siimple-box-title title">Suzy Makeup</div>
+        <div class="siimple-box-title title"><a class="link" href="{{ url_for('index') }}">Suzy Makeup</a></div>
       </div>
       <div class="siimple-menu">
         {% for c in categories %}
@@ -69,7 +69,7 @@
         <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
           <div class="siimple-box siimple-box--white">
             <!-- <img src="img/lips1.jpg" /> -->
-            <div class="siimple-box-subtitle title"><a href="{{ url_for('indexItem', category_id = category.id, item_id = i.id) }}">{{ i.name }}</a></div>
+            <div class="siimple-box-subtitle title"><a class="link" href="{{ url_for('indexItem', category_id = i.category_id, item_id = i.id) }}">{{ i.name }}</a></div>
             <div class="siimple-box-detail">{{ i.price }}</div>
           </div>
         </div>

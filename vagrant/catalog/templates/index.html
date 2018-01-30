@@ -74,7 +74,7 @@ img {
           <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
             <div class="siimple-box siimple-box--white">
               <!-- <img src="img/lips1.jpg" /> -->
-              <div class="siimple-box-subtitle title">{{ i.name }}</div>
+              <div class="siimple-box-subtitle title"><a class="link" href="{{ url_for('indexItem', category_id = i.category_id, item_id = i.id ) }}">{{ i.name }}</a></div>
               <div class="siimple-box-detail">{{ i.price }}</div>
             </div>
           </div>
