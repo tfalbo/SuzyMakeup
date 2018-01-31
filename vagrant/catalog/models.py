@@ -7,11 +7,6 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-class Photo(Base):
-    __tablename__ = 'photo'
-
-    id = Column(Integer, primary_key=True)
-    filename = Column(String(250), nullable=False)
 
 class Category(Base):
     __tablename__ = 'category'
