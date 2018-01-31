@@ -2,6 +2,8 @@
 <html>
 <head>
 <title>Suzy Makeup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
 
@@ -40,18 +42,10 @@ img {
 
     <!--Menu-->
     <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
-      <div class="siimple-box siimple-box--white">
-
-      </div>
-      <div class="siimple-box siimple-box--white">
-
-      </div>
-      <div class="siimple-box siimple-box--white">
-
-      </div>
-      <div class="siimple-box siimple-box--white">
-
-      </div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
       <div class="siimple-box siimple-box--white">
         <div class="siimple-box-title title">Suzy Makeup</div>
       </div>
@@ -70,6 +64,7 @@ img {
       <div class="siimple-h3">Latest Items</div>
 
       <div class="siimple-grid">
+           <div class="siimple-grid-row">
           {% for i in items %}
           <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
             <div class="siimple-box siimple-box--white">
@@ -79,6 +74,7 @@ img {
             </div>
           </div>
           {% endfor %}
+        </div>
       </div>
 
 

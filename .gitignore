@@ -4,3 +4,4 @@ __pycache__
 .vagrant
 .DS_Store
 vagrant/catalog/static/img/photos/*
+venv/
