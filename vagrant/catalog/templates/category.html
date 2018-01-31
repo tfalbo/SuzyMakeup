@@ -68,9 +68,9 @@
         {% for i in items %}
         <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
           <div class="siimple-box siimple-box--white">
-            <a href="{{ url_for('indexItem', category_id = i.category_id, item_id = i.id ) }}"><img src="static/img/photos/{{ i.photo_filename }}" /></a>
+            <a href="{{ url_for('indexItem', category_id = i.category_id, item_id = i.id ) }}"><img src="{{ url_for('static', filename = 'img/photos/'+i.photo_filename) }}" /></a>
             <div class="siimple-box-subtitle title"><a class="link" href="{{ url_for('indexItem', category_id = i.category_id, item_id = i.id ) }}">{{ i.name }}</a></div>
-            <div class="siimple-box-detail">{{ i.price }}</div>
+            <div class="siimple-box-detail">$ {{ i.price }}</div>
           </div>
         </div>
         {% endfor %}

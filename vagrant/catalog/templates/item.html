@@ -70,14 +70,14 @@
           <div class="siimple-grid-col siimple-grid-col--4 siimple-grid-col-md--12">
             <div class="siimple-box siimple-box--white">
 
-              <img src="img/lips1.jpg" />
+              <img src="{{ url_for('static', filename = 'img/photos/'+item.photo_filename) }}" />
             </div>
           </div>
           <div class="siimple-grid-col siimple-grid-col--6 siimple-grid-col-md--12">
             <div class="siimple-box siimple-box--white">
               <div class="siimple-box-subtitle title">{{ item.name }}</div>
               <div class="siimple-box-detail">{{ item.description }}</div>
-              <div class="siimple-box-subtitle">{{ item.price }}</div>
+              <div class="siimple-box-subtitle">$ {{ item.price }}</div>
               <div class="siimple-btn siimple-btn--navy">Buy</div>
             </div>
           </div>
