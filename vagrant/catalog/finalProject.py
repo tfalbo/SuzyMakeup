@@ -1,8 +1,10 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, Item, Photo
 from flask_uploads import UploadSet, IMAGES, configure_uploads
+from flask_basicauth import BasicAuth
 
 app = Flask(__name__)
 
@@ -11,6 +13,12 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# Basic Auth
+app.config['BASIC_AUTH_USERNAME'] = os.environ['SUZY_ADM']
+app.config['BASIC_AUTH_PASSWORD'] = os.environ['SUZY_PASS']
+
+basic_auth = BasicAuth(app)
 
 ## Photo Setup
 
@@ -69,11 +77,13 @@ def indexItem(category_id, item_id):
 
 @app.route('/admin/')
 @app.route('/admin/categories/')
+@basic_auth.required
 def showCategories():
     categories = session.query(Category)
     return render_template('admin/categories.html', categories = categories)
 
 @app.route('/admin/categories/new/', methods=['GET', 'POST'])
+@basic_auth.required
 def newCategory():
     if request.method == 'POST':
         newCategory = Category(name=request.form['name'])
@@ -85,6 +95,7 @@ def newCategory():
         return render_template('admin/newCategory.html', categories = categories)
 
 @app.route('/admin/categories/<int:category_id>/edit/', methods=['GET', 'POST'])
+@basic_auth.required
 def editCategory(category_id):
     editedCategory = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
@@ -98,6 +109,7 @@ def editCategory(category_id):
         return render_template('editCategory.html', category = editedCategory, categories = categories)
 
 @app.route('/admin/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
+@basic_auth.required
 def deleteCategory(category_id):
     categoryToDelete = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
@@ -112,6 +124,7 @@ def deleteCategory(category_id):
 
 @app.route('/admin/categories/<int:category_id>')
 @app.route('/admin/categories/<int:category_id>/items/', methods = ['GET', 'POST'])
+@basic_auth.required
 def showItems(category_id):
     categories = session.query(Category)
     category = session.query(Category).filter_by(id=category_id).one()
@@ -120,6 +133,7 @@ def showItems(category_id):
 
 
 @app.route('/admin/categories/<int:category_id>/items/new/', methods = ['GET', 'POST'])
+@basic_auth.required
 def newItem(category_id):
     if request.method == 'POST':
         newItem = Item(name=request.form['name'],
@@ -135,6 +149,7 @@ def newItem(category_id):
         return render_template('admin/newItem.html', category_id = category_id, categories = categories)
 
 @app.route('/admin/categories/<int:category_id>/items/<int:item_id>/edit/', methods = ['GET', 'POST'])
+@basic_auth.required
 def editItem(category_id, item_id):
     editedItem = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
@@ -154,6 +169,7 @@ def editItem(category_id, item_id):
         return render_template('admin/editItem.html', category_id = category_id, item = editedItem, categories = categories)
 
 @app.route('/admin/categories/<int:category_id>/items/<int:item_id>/delete/', methods = ['GET', 'POST'])
+@basic_auth.required
 def deleteItem(category_id, item_id):
     itemToDelete = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
