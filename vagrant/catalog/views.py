@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Category, Item, Photo
+from models import Base, Category, Item
 from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_basicauth import BasicAuth
 
