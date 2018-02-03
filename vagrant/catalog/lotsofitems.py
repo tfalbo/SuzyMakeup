@@ -49,7 +49,7 @@ lips_item2 = Item(name="Cat Lipstick",
                 photo_filename="lips2.jpg",
                 category=category1)
 
-session.add(lips_item1)
+session.add(lips_item2)
 session.commit()
 
 # Eyes
