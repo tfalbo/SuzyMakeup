@@ -3,6 +3,5 @@ __pycache__
 *.db
 .vagrant
 .DS_Store
-vagrant/catalog/static/img/photos/*
 vagrant/catalog/client_secret.json
 venv/
