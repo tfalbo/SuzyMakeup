@@ -33,6 +33,15 @@ img {
 </style>
 <body>
 
+  <div class="siimple-navbar siimple-navbar--pink siimple-navbar--fluid">
+    <div class="siimple-layout--left">
+      <a class="siimple-navbar-title">WE SHIP WORLDWIDE</a>
+    </div>
+    <div class="siimple-layout--right">
+      <a class="siimple-navbar-link" href="{{ url_for('showLogin') }}">Login</a>
+      <a class="siimple-navbar-link" href="{{ url_for('showCategories') }}">Admin</a>
+    </div>
+  </div>
 
   <div class="siimple-grid">
 
@@ -47,7 +56,7 @@ img {
       <div class="siimple-box siimple-box--white"></div>
       <div class="siimple-box siimple-box--white"></div>
       <div class="siimple-box siimple-box--white">
-        <div class="siimple-box-title title">Suzy Makeup</div>
+        <div class="siimple-box-title title"><a class="link" href="{{ url_for('index') }}">Suzy Makeup</a></div>
       </div>
       <div class="siimple-menu">
         {% for c in categories %}
