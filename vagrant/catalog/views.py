@@ -17,7 +17,7 @@ import requests
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('client_secret.json', 'r').read())['web']['client_id']
+    open('/vagrant/catalog/client_secret.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Suzy Makeup"
 
 engine = create_engine('sqlite:///suzymakeup.db')
@@ -59,7 +59,8 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secret.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/vagrant/catalog/client_secret.json', scope='')
+        print(oauth_flow)
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
