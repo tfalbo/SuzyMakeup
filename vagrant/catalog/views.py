@@ -17,7 +17,7 @@ import requests
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('/vagrant/catalog/client_secret.json', 'r').read())['web']['client_id']
+    open('vagrant/catalog/client_secret.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Suzy Makeup"
 
 engine = create_engine('sqlite:///suzymakeup.db')
