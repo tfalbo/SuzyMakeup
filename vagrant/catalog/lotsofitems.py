@@ -1,5 +1,9 @@
 import os
-os.remove('suzymakeup.db')
+
+try:
+    os.remove('suzymakeup.db')
+except OSError:
+    pass
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
