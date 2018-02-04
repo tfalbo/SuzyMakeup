@@ -181,4 +181,4 @@ session.add(brushes_item1)
 session.commit()
 
 
-print "added items!"
+print ("added items!")
