@@ -8,7 +8,7 @@ except OSError:
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Base,Category, Item
+from models import Base, Category, Item
 
 
 engine = create_engine('sqlite:///suzymakeup.db')
@@ -42,20 +42,20 @@ session.add(category1)
 session.commit()
 
 lips_item1 = Item(name="Cat Lipstick",
-                description=lorem,
-                price="19.99",
-                photo_filename="lips1.jpg",
-                category=category1)
+                  description=lorem,
+                  price="19.99",
+                  photo_filename="lips1.jpg",
+                  category=category1)
 
 session.add(lips_item1)
 session.commit()
 
 
 lips_item2 = Item(name="Cat Lipstick",
-                description=lorem,
-                price="24.99",
-                photo_filename="lips2.jpg",
-                category=category1)
+                  description=lorem,
+                  price="24.99",
+                  photo_filename="lips2.jpg",
+                  category=category1)
 
 session.add(lips_item2)
 session.commit()
@@ -67,37 +67,37 @@ session.add(category2)
 session.commit
 
 eyes_item1 = Item(name="Cat Eyeshadow",
-                description=lorem,
-                price="29.99",
-                photo_filename="eyes1.jpg",
-                category=category2)
+                  description=lorem,
+                  price="29.99",
+                  photo_filename="eyes1.jpg",
+                  category=category2)
 
 session.add(eyes_item1)
 session.commit()
 
 eyes_item2 = Item(name="Cat Eyeshadow",
-                description=lorem,
-                price="29.99",
-                photo_filename="eyes2.jpg",
-                category=category2)
+                  description=lorem,
+                  price="29.99",
+                  photo_filename="eyes2.jpg",
+                  category=category2)
 
 session.add(eyes_item2)
 session.commit()
 
 eyes_item3 = Item(name="Cat Eyeshadow Kit",
-                description=lorem,
-                price="39.99",
-                photo_filename="eyes3.jpg",
-                category=category2)
+                  description=lorem,
+                  price="39.99",
+                  photo_filename="eyes3.jpg",
+                  category=category2)
 
 session.add(eyes_item3)
 session.commit()
 
 eyes_item4 = Item(name="Cat Mascara",
-                description=lorem,
-                price="29.99",
-                photo_filename="eyes4.jpg",
-                category=category2)
+                  description=lorem,
+                  price="29.99",
+                  photo_filename="eyes4.jpg",
+                  category=category2)
 
 session.add(eyes_item4)
 session.commit()
@@ -108,23 +108,22 @@ session.add(category3)
 session.commit()
 
 face_item1 = Item(name="Cat Blush",
-                description=lorem,
-                price="15.99",
-                photo_filename="face1.jpg",
-                category=category3)
+                  description=lorem,
+                  price="15.99",
+                  photo_filename="face1.jpg",
+                  category=category3)
 
 session.add(face_item1)
 session.commit()
 
 face_item1 = Item(name="Cat Blush",
-                description=lorem,
-                price="15.99",
-                photo_filename="face2.jpg",
-                category=category3)
+                  description=lorem,
+                  price="15.99",
+                  photo_filename="face2.jpg",
+                  category=category3)
 
 session.add(face_item1)
 session.commit()
-
 
 
 # Accessories
@@ -133,41 +132,40 @@ session.add(category4)
 session.commit()
 
 accessories_item1 = Item(name="Cat Band",
-                description=lorem,
-                price="15.99",
-                photo_filename="access1.png",
-                category=category4)
+                         description=lorem,
+                         price="15.99",
+                         photo_filename="access1.png",
+                         category=category4)
 
 session.add(accessories_item1)
 session.commit()
 
 accessories_item2 = Item(name="Cat Pouch",
-                description=lorem,
-                price="10.99",
-                photo_filename="access2.png",
-                category=category4)
+                         description=lorem,
+                         price="10.99",
+                         photo_filename="access2.png",
+                         category=category4)
 
 session.add(accessories_item2)
 session.commit()
 
 accessories_item3 = Item(name="Cat Pouch",
-                description=lorem,
-                price="10.99",
-                photo_filename="access3.png",
-                category=category4)
+                         description=lorem,
+                         price="10.99",
+                         photo_filename="access3.png",
+                         category=category4)
 
 session.add(accessories_item3)
 session.commit()
 
 accessories_item4 = Item(name="Cat Pouch",
-                description=lorem,
-                price="10.99",
-                photo_filename="access4.png",
-                category=category4)
+                         description=lorem,
+                         price="10.99",
+                         photo_filename="access4.png",
+                         category=category4)
 
 session.add(accessories_item4)
 session.commit()
-
 
 
 # Accessories
@@ -176,13 +174,13 @@ session.add(category5)
 session.commit()
 
 brushes_item1 = Item(name="Cat Paw Brush",
-                description=lorem,
-                price="5.99",
-                photo_filename="brush1.jpg",
-                category=category5)
+                     description=lorem,
+                     price="5.99",
+                     photo_filename="brush1.jpg",
+                     category=category5)
 
 session.add(brushes_item1)
 session.commit()
 
 
-print ("added items!")
+print("added items!")

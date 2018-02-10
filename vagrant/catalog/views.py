@@ -202,7 +202,7 @@ def showCategories():
     if 'username' not in login_session:
         return redirect('/login')
     categories = session.query(Category)
-    return render_template('admin/categories.html', categories=categories, login_session = login_session)
+    return render_template('admin/categories.html', categories=categories, login_session=login_session)
 
 
 @app.route('/admin/categories/new/', methods=['GET', 'POST'])

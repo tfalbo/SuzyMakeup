@@ -24,6 +24,7 @@ class Category(Base):
             'name': self.name,
         }
 
+
 class Item(Base):
     __tablename__ = 'item'
 
