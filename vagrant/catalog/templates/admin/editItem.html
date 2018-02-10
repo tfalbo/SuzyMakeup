@@ -23,6 +23,14 @@
     }
   </style>
   <body>
+    <div class="siimple-navbar siimple-navbar--pink siimple-navbar--fluid">
+      <div class="siimple-layout--left">
+        <a class="siimple-navbar-title">Hello, {{login_session.username}}</a>
+      </div>
+      <div class="siimple-layout--right">
+        <a class="siimple-navbar-link" href="{{ url_for('gdisconnect') }}">Logout</a>
+      </div>
+    </div>
     <div class="siimple-grid">
       <!-- Content -->
       <div class="siimple-grid-row">

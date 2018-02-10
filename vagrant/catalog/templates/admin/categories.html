@@ -24,6 +24,15 @@
 
   </style>
   <body>
+    <div class="siimple-navbar siimple-navbar--pink siimple-navbar--fluid">
+      <div class="siimple-layout--left">
+        <a class="siimple-navbar-title">Hello, {{login_session.username}}</a>
+      </div>
+      <div class="siimple-layout--right">
+        <a class="siimple-navbar-link" href="{{ url_for('gdisconnect') }}">Logout</a>
+      </div>
+    </div>
+
     <div class="siimple-grid">
       <!-- Content -->
       <div class="siimple-grid-row">
@@ -54,7 +63,7 @@
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-jumbotron siimple-jumbotron--pink siimple-jumbotron--fluid">
-            <div class="siimple-jumbotron-title">Hello, Jane!</div>
+            <div class="siimple-jumbotron-title">Hello, {{ login_session.username }}</div>
             <div class="siimple-jumbotron-subtitle">Welcome to the admin</div>
             <div class="siimple-jumbotron-detail">Please choose an option on the left</div>
           </div>
