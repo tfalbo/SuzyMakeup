@@ -18,7 +18,7 @@ from oauth2client.client import FlowExchangeError
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('/vagrant/catalog/client_secrets.json', 'r').
+    open('vagrant/catalog/client_secrets.json', 'r').
     read())['web']['client_id']
 APPLICATION_NAME = "Suzy Makeup"
 
@@ -80,7 +80,7 @@ def gconnect():
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets(
-            '/vagrant/catalog/client_secrets.json', scope='')
+            'vagrant/catalog/client_secrets.json', scope='')
         print(oauth_flow)
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
