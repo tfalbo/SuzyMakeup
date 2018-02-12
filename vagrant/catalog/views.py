@@ -48,15 +48,16 @@ def createUser(login_session):
     return user.id
 
 
-
 def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except:
+    except Exception:
         return None
 
 # Create anti-forgery state token
+
+
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
@@ -121,8 +122,8 @@ def gconnect():
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
         response = make_response(json.dumps(
-                                'Current user is already connected.'),
-                                 200)
+            'Current user is already connected.'),
+            200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -146,7 +147,6 @@ def gconnect():
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
-
 
     output = ''
     output += '<h1>Welcome, '
@@ -175,7 +175,8 @@ def gdisconnect():
     print('In gdisconnect access token is %s', access_token)
     print('User name is: ')
     print(login_session['username'])
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    token_url = 'https://accounts.google.com/o/oauth2/revoke?token='
+    url = token_url + login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print('result is ')
@@ -211,10 +212,10 @@ def indexCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id)
     return render_template(
-                            'category.html',
-                            categories=categories,
-                            category=category,
-                            items=items)
+        'category.html',
+        categories=categories,
+        category=category,
+        items=items)
 
 
 @app.route('/categories/<int:category_id>/items/<int:item_id>/')
@@ -233,9 +234,9 @@ def showCategories():
         return redirect('/login')
     categories = session.query(Category)
     return render_template(
-                            'admin/categories.html',
-                            categories=categories,
-                            login_session=login_session)
+        'admin/categories.html',
+        categories=categories,
+        login_session=login_session)
 
 
 @app.route('/admin/categories/new/', methods=['GET', 'POST'])
@@ -244,21 +245,21 @@ def newCategory():
         return redirect('/login')
     if request.method == 'POST':
         newCategory = Category(name=request.form['name'],
-                                user_id=login_session['user_id'])
+                               user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         return redirect(url_for('showCategories'))
     else:
         categories = session.query(Category)
         return render_template(
-                                'admin/newCategory.html',
-                                categories=categories,
-                                login_session=login_session)
+            'admin/newCategory.html',
+            categories=categories,
+            login_session=login_session)
 
 
 @app.route(
-            '/admin/categories/<int:category_id>/edit/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/edit/',
+    methods=['GET', 'POST'])
 def editCategory(category_id):
     editedCategory = session.query(Category).filter_by(id=category_id).one()
 
@@ -269,7 +270,7 @@ def editCategory(category_id):
     # Check for user authorization
     if editedCategory.user_id != login_session['user_id']:
         flash('You are not the owner of {}'.format(editedCategory.name))
-        return redirect(url_for('showItems', category_id = editedCategory.id))
+        return redirect(url_for('showItems', category_id=editedCategory.id))
 
     if request.method == 'POST':
         if request.form['name']:
@@ -280,15 +281,15 @@ def editCategory(category_id):
     else:
         categories = session.query(Category)
         return render_template(
-                                'admin/editCategory.html',
-                                category=editedCategory,
-                                categories=categories,
-                                login_session=login_session)
+            'admin/editCategory.html',
+            category=editedCategory,
+            categories=categories,
+            login_session=login_session)
 
 
 @app.route(
-            '/admin/categories/<int:category_id>/delete/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/delete/',
+    methods=['GET', 'POST'])
 def deleteCategory(category_id):
     categoryToDelete = session.query(Category).filter_by(id=category_id).one()
 
@@ -299,7 +300,7 @@ def deleteCategory(category_id):
     # Check for user authorization
     if categoryToDelete.user_id != login_session['user_id']:
         flash('You are not the owner of {}'.format(categoryToDelete.name))
-        return redirect(url_for('showItems', category_id = categoryToDelete.id))
+        return redirect(url_for('showItems', category_id=categoryToDelete.id))
 
     if request.method == 'POST':
         session.delete(categoryToDelete)
@@ -307,16 +308,16 @@ def deleteCategory(category_id):
         return redirect(url_for('showCategories'))
     else:
         return render_template(
-                                'admin/deleteCategory.html',
-                                category=categoryToDelete)
+            'admin/deleteCategory.html',
+            category=categoryToDelete)
 
 
 # Routes for Items
 
 @app.route('/admin/categories/<int:category_id>')
 @app.route(
-            '/admin/categories/<int:category_id>/items/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/items/',
+    methods=['GET', 'POST'])
 def showItems(category_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -324,43 +325,43 @@ def showItems(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id)
     return render_template(
-                            'admin/items.html',
-                            categories=categories,
-                            category=category,
-                            items=items,
-                            category_id=category_id,
-                            login_session=login_session)
+        'admin/items.html',
+        categories=categories,
+        category=category,
+        items=items,
+        category_id=category_id,
+        login_session=login_session)
 
 
 @app.route(
-            '/admin/categories/<int:category_id>/items/new/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/items/new/',
+    methods=['GET', 'POST'])
 def newItem(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
         newItem = Item(
-                        name=request.form['name'],
-                        description=request.form['description'],
-                        price=request.form['price'],
-                        photo_filename=photos.save(request.files['photo']),
-                        category_id=category_id,
-                        user_id=login_session['user_id'])
+            name=request.form['name'],
+            description=request.form['description'],
+            price=request.form['price'],
+            photo_filename=photos.save(request.files['photo']),
+            category_id=category_id,
+            user_id=login_session['user_id'])
         session.add(newItem)
         session.commit()
         return redirect(url_for('showItems', category_id=category_id))
     else:
         categories = session.query(Category)
         return render_template(
-                                'admin/newItem.html',
-                                category_id=category_id,
-                                categories=categories,
-                                login_session=login_session)
+            'admin/newItem.html',
+            category_id=category_id,
+            categories=categories,
+            login_session=login_session)
 
 
 @app.route(
-            '/admin/categories/<int:category_id>/items/<int:item_id>/edit/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/items/<int:item_id>/edit/',
+    methods=['GET', 'POST'])
 def editItem(category_id, item_id):
     editedItem = session.query(Item).filter_by(id=item_id).one()
 
@@ -371,7 +372,8 @@ def editItem(category_id, item_id):
     # Check for user authorization
     if editedItem.user_id != login_session['user_id']:
         flash('You are not the owner of {}'.format(editedItem.name))
-        return redirect(url_for('showItems', category_id = editedItem.category_id))
+        return redirect(url_for('showItems',
+                                category_id=editedItem.category_id))
 
     if request.method == 'POST':
         if request.form['name']:
@@ -388,16 +390,16 @@ def editItem(category_id, item_id):
     else:
         categories = session.query(Category)
         return render_template(
-                                'admin/editItem.html',
-                                category_id=category_id,
-                                item=editedItem,
-                                categories=categories,
-                                login_session=login_session)
+            'admin/editItem.html',
+            category_id=category_id,
+            item=editedItem,
+            categories=categories,
+            login_session=login_session)
 
 
 @app.route(
-            '/admin/categories/<int:category_id>/items/<int:item_id>/delete/',
-            methods=['GET', 'POST'])
+    '/admin/categories/<int:category_id>/items/<int:item_id>/delete/',
+    methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
     itemToDelete = session.query(Item).filter_by(id=item_id).one()
 
@@ -408,8 +410,8 @@ def deleteItem(category_id, item_id):
     # Check for user authorization
     if itemToDelete.user_id != login_session['user_id']:
         flash('You are not the owner of {}'.format(itemToDelete.name))
-        return redirect(url_for('showItems', category_id = itemToDelete.category_id))
-
+        return redirect(url_for('showItems',
+                        category_id=itemToDelete.category_id))
 
     if request.method == 'POST':
         session.delete(itemToDelete)
