@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<title>Suzy Makeup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
+
+</head>
+<style>
+.title
+{
+  color: var(--siimple-pink);
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.link{
+  text-decoration: none;
+  color: var(--siimple-pink);
+}
+.button-link
+{
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+
+</style>
+<body>
+
+  <div class="siimple-navbar siimple-navbar--pink siimple-navbar--fluid">
+    <div class="siimple-layout--left">
+      <a class="siimple-navbar-title">WE SHIP WORLDWIDE</a>
+    </div>
+    <div class="siimple-layout--right">
+      <a class="siimple-navbar-link" href="{{ url_for('showLogin') }}">Login</a>
+    </div>
+  </div>
+
+  <div class="siimple-grid">
+
+
+  <!-- Content -->
+  <div class="siimple-grid-row">
+
+    <!--Menu-->
+    <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white">
+        <div class="siimple-box-title title"><a class="link" href="{{ url_for('index') }}">Suzy Makeup</a></div>
+      </div>
+      <div class="siimple-menu">
+        {% for c in categories %}
+        <a class="siimple-menu-item" href="{{url_for('indexCategory', category_id = c.id)}}">{{ c.name }}</a>
+        {% endfor %}
+      </div>
+
+    </div>
+    <!-- Main Content -->
+    <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
+      <div class="siimple-box siimple-box--white"></div>
+      <div class="siimple-box siimple-box--white"></div>
+      {% block content %}
+      {% endblock content%}
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

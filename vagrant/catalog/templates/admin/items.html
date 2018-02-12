@@ -1,74 +1,7 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Suzy Makeup</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-colors@0.2.0/dist/siimple-colors.min.css">
-  </head>
-  <style>
-    .title
-    {
-      color: var(--siimple-pink);
-    }
+{% extends "admin/default_admin.html" %}
 
-    .link{
-      text-decoration: none;
-      color: #57607c;
-    }
-    .button-link
-    {
-        text-decoration: none;
-        color: #FFFFFF;
-    }
-  </style>
-  <body>
-    <div class="siimple-navbar siimple-navbar--pink siimple-navbar--fluid">
-      <div class="siimple-layout--left">
-        <a class="siimple-navbar-title">Hello, {{login_session.username}}</a>
-      </div>
-      <div class="siimple-layout--right">
-        <a class="siimple-navbar-link" href="{{ url_for('gdisconnect') }}">Logout</a>
-      </div>
-    </div>
-    <div class="siimple-grid">
-                <!-- Content -->
-      <div class="siimple-grid-row">
-        <!--Menu-->
-        <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
-          <div class="siimple-box siimple-box--white">
-          </div>
-          <div class="siimple-box siimple-box--white"></div>
-          <div class="siimple-box siimple-box--white"></div>
-          <div class="siimple-box siimple-box--white"></div>
-          <div class="siimple-box siimple-box--white">
-            <div class="siimple-box-title title">Suzy Makeup</div>
-            <div class="siimple-box-subtitle">Admin</div>
-          </div>
-          <div class="siimple-menu">
-            <div class="siimple-menu-group">CATEGORIES</div>
-            {% for c in categories %}
-            <a class="siimple-menu-item" href="{{url_for('showItems', category_id = c.id)}}">{{ c.name }}</a>
-            {% endfor %}
-            <div class="siimple-menu-sub">
-              <div class="siimple-menu-item"><a class="link" href = "{{url_for('newCategory')}}">Add New Category</a></div>
-            </div>
-          </div>
-        </div>
-        <!-- Main Content -->
-        <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
-          <div class="siimple-box siimple-box--white"></div>
-          <div class="siimple-box siimple-box--white"></div>
-
-          {% with messages = get_flashed_messages() %}
-           {% if messages %}
-             {% for message in messages %}
-             <div class="siimple-alert siimple-alert--red">{{ message }}</div>
-             {% endfor %}
-          {% endif %}
-        {% endwith %}
-          <div class="siimple-box siimple-box--white"></div>
-          <div class="siimple-box siimple-box--white"></div>
+{% block content %}
+<div class="siimple-content">
           <div class="siimple-grid">
             <div class="siimple-grid-row">
               <div class="siimple-grid-col siimple-grid-col--6">
@@ -110,8 +43,5 @@
               <div class="siimple-btn siimple-btn--navy"><a class="button-link" href = "{{url_for('deleteCategory',  category_id = category.id)}}">Delete Category</a></div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+</div>
+{% endblock %}   
