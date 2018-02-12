@@ -4,12 +4,12 @@ import string
 import httplib2
 import json
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from flask import redirect, url_for, jsonify, make_response
 from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, Category, Item
+from models import Base, User, Category, Item
 from flask_uploads import UploadSet, IMAGES, configure_uploads
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -18,7 +18,7 @@ from oauth2client.client import FlowExchangeError
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('vagrant/catalog/client_secrets.json', 'r').
+    open('/vagrant/catalog/client_secrets.json', 'r').
     read())['web']['client_id']
 APPLICATION_NAME = "Suzy Makeup"
 
@@ -38,6 +38,23 @@ configure_uploads(app, photos)
 
 
 # Routes
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -62,7 +79,7 @@ def gconnect():
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets(
-            'vagrant/catalog/client_secrets.json', scope='')
+            '/vagrant/catalog/client_secrets.json', scope='')
         print(oauth_flow)
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
@@ -124,6 +141,13 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    user_id = getUserID(login_session['email'])
+
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -133,7 +157,6 @@ def gconnect():
     output += """ "style = "width: 300px; height: 300px;border-radius:
                 150px;-webkit-border-radius: 150px;-moz-border-radius:
                 150px;"> """
-    flash("you are now logged in as %s" % login_session['username'])
     print("done!")
     return output
 
@@ -152,8 +175,7 @@ def gdisconnect():
     print('In gdisconnect access token is %s', access_token)
     print('User name is: ')
     print(login_session['username'])
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s'
-    % login_session['access_token']
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print('result is ')
@@ -221,7 +243,8 @@ def newCategory():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newCategory = Category(name=request.form['name'])
+        newCategory = Category(name=request.form['name'],
+                                user_id=login_session['user_id'])
         session.add(newCategory)
         session.commit()
         return redirect(url_for('showCategories'))
@@ -237,19 +260,27 @@ def newCategory():
             '/admin/categories/<int:category_id>/edit/',
             methods=['GET', 'POST'])
 def editCategory(category_id):
+    editedCategory = session.query(Category).filter_by(id=category_id).one()
+
+    # Check for user authentication
     if 'username' not in login_session:
         return redirect('/login')
-    editedCategory = session.query(Category).filter_by(id=category_id).one()
+
+    # Check for user authorization
+    if editedCategory.user_id != login_session['user_id']:
+        flash('You are not the owner of {}'.format(editedCategory.name))
+        return redirect(url_for('showItems', category_id = editedCategory.id))
+
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
         session.add(editedCategory)
         session.commit()
-        return redirect(url_for('admin/showCategories'))
+        return redirect(url_for('showCategories'))
     else:
         categories = session.query(Category)
         return render_template(
-                                'editCategory.html',
+                                'admin/editCategory.html',
                                 category=editedCategory,
                                 categories=categories,
                                 login_session=login_session)
@@ -259,9 +290,17 @@ def editCategory(category_id):
             '/admin/categories/<int:category_id>/delete/',
             methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    categoryToDelete = session.query(Category).filter_by(id=category_id).one()
+
+    # Check for user authentication
     if 'username' not in login_session:
         return redirect('/login')
-    categoryToDelete = session.query(Category).filter_by(id=category_id).one()
+
+    # Check for user authorization
+    if categoryToDelete.user_id != login_session['user_id']:
+        flash('You are not the owner of {}'.format(categoryToDelete.name))
+        return redirect(url_for('showItems', category_id = categoryToDelete.id))
+
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
@@ -305,7 +344,8 @@ def newItem(category_id):
                         description=request.form['description'],
                         price=request.form['price'],
                         photo_filename=photos.save(request.files['photo']),
-                        category_id=category_id)
+                        category_id=category_id,
+                        user_id=login_session['user_id'])
         session.add(newItem)
         session.commit()
         return redirect(url_for('showItems', category_id=category_id))
@@ -322,9 +362,17 @@ def newItem(category_id):
             '/admin/categories/<int:category_id>/items/<int:item_id>/edit/',
             methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    editedItem = session.query(Item).filter_by(id=item_id).one()
+
+    # Check for user authentication
     if 'username' not in login_session:
         return redirect('/login')
-    editedItem = session.query(Item).filter_by(id=item_id).one()
+
+    # Check for user authorization
+    if editedItem.user_id != login_session['user_id']:
+        flash('You are not the owner of {}'.format(editedItem.name))
+        return redirect(url_for('showItems', category_id = editedItem.category_id))
+
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -351,9 +399,18 @@ def editItem(category_id, item_id):
             '/admin/categories/<int:category_id>/items/<int:item_id>/delete/',
             methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
+    itemToDelete = session.query(Item).filter_by(id=item_id).one()
+
+    # Check for user authentication
     if 'username' not in login_session:
         return redirect('/login')
-    itemToDelete = session.query(Item).filter_by(id=item_id).one()
+
+    # Check for user authorization
+    if itemToDelete.user_id != login_session['user_id']:
+        flash('You are not the owner of {}'.format(itemToDelete.name))
+        return redirect(url_for('showItems', category_id = itemToDelete.category_id))
+
+
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()

@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="siimple-grid">
-      <!-- Content -->
+                <!-- Content -->
       <div class="siimple-grid-row">
         <!--Menu-->
         <div class="siimple-grid-col siimple-grid-col--3 siimple-grid-col-md--12">
@@ -59,6 +59,14 @@
         <div class="siimple-grid-col siimple-grid-col--9 siimple-grid-col-md--12">
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-box siimple-box--white"></div>
+
+          {% with messages = get_flashed_messages() %}
+           {% if messages %}
+             {% for message in messages %}
+             <div class="siimple-alert siimple-alert--red">{{ message }}</div>
+             {% endfor %}
+          {% endif %}
+        {% endwith %}
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-box siimple-box--white"></div>
           <div class="siimple-grid">
